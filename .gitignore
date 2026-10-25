@@ -1,0 +1,14 @@
+# Build output
+/target
+/gen
+
+# Editors and OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.swp
+
+# Local-only
+*.log
+.claude/
