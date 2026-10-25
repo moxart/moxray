@@ -1,0 +1,75 @@
+name: Release
+
+# Pushing a tag such as v0.1.0 builds installers for Linux, Windows and macOS and attaches
+# them to a GitHub release.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux
+            os: ubuntu-22.04
+            args: --bundles deb,appimage
+          - name: Windows
+            os: windows-latest
+            args: --bundles nsis
+          - name: macOS (Apple silicon)
+            os: macos-latest
+            target: aarch64-apple-darwin
+            args: --target aarch64-apple-darwin --bundles dmg
+          - name: macOS (Intel)
+            os: macos-latest
+            target: x86_64-apple-darwin
+            args: --target x86_64-apple-darwin --bundles dmg
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Tauri system dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libayatana-appindicator3-dev \
+            librsvg2-dev libgtk-3-dev libsoup-3.0-dev libjavascriptcoregtk-4.1-dev \
+            libssl-dev libxdo-dev patchelf
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.target }}
+
+      - name: Install the Tauri CLI
+        run: cargo install tauri-cli --version "^2" --locked
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tauriScript: cargo tauri
+          tagName: ${{ github.ref_name }}
+          releaseName: MoxRay ${{ github.ref_name }}
+          releaseBody: |
+            Test release. MoxRay is a desktop client for Xray-core; it downloads and checks Xray-core itself from the Core menu.
+
+            **Linux**: `.deb` (Debian, Ubuntu) or `.AppImage` (`chmod +x` it, then run).
+            **Windows**: the `-setup.exe` installer. Windows SmartScreen may warn because the installer is not code-signed.
+            **macOS**: the `.dmg` for your chip (Apple silicon or Intel). The app is not notarized: right-click it, choose Open, or run `xattr -dr com.apple.quarantine /Applications/MoxRay.app`.
+
+            System proxy support is tested on Linux (GNOME, KDE). On Windows and macOS it is implemented but has not been tried on real machines yet; if it misbehaves, turn off "Set system proxy" in Settings and point your apps at the local SOCKS (10808) or HTTP (10809) port.
+
+            Android and iOS are not available: a mobile proxy client needs the system VPN APIs, which this app does not implement yet.
+          releaseDraft: false
+          prerelease: true
+          args: ${{ matrix.args }}

@@ -11,7 +11,6 @@ use std::path::Path;
 use std::process::Stdio;
 use std::time::{Duration, Instant};
 use tokio::net::TcpStream;
-use tokio::process::Command;
 
 const USER_AGENT: &str = concat!("MoxRay/", env!("CARGO_PKG_VERSION"));
 const MAX_DOWNLOAD_BYTES: usize = 120 * 1024 * 1024;
@@ -188,7 +187,7 @@ async fn probe(binary: &Path, config_path: &Path, port: u16, test_url: &str) -> 
         .filter(|dir| dir.join("geoip.dat").is_file())
         .map(Path::to_path_buf)
         .unwrap_or_else(core_dir);
-    let mut child = Command::new(binary)
+    let mut child = crate::proc::command(binary)
         .arg("run")
         .arg("-c")
         .arg(config_path)
@@ -339,7 +338,7 @@ fn extract_core(zip_bytes: &[u8]) -> Result<()> {
 pub async fn core_version(binary: &Path) -> Option<String> {
     let output = tokio::time::timeout(
         Duration::from_secs(3),
-        Command::new(binary).arg("version").kill_on_drop(true).output(),
+        crate::proc::command(binary).arg("version").kill_on_drop(true).output(),
     )
     .await
     .ok()?

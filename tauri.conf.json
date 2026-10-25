@@ -24,16 +24,35 @@
   },
   "bundle": {
     "active": true,
-    "targets": [
-      "deb",
-      "appimage"
-    ],
+    "targets": "all",
     "icon": [
-      "icons/32x32.png",
       "icons/128x128.png",
+      "icons/32x32.png",
       "icons/128x128@2x.png",
-      "icons/icon.png"
+      "icons/icon.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
     ],
-    "category": "Network"
+    "category": "Network",
+    "publisher": "Patrick Der Avakians",
+    "copyright": "Copyright (c) 2026 Patrick Der Avakians",
+    "shortDescription": "Proxy client for Xray-core",
+    "longDescription": "MoxRay is a desktop client for Xray-core: import servers and subscriptions, switch automatically when a server fails, and set the system proxy.",
+    "license": "MIT",
+    "licenseFile": "LICENSE",
+    "homepage": "https://github.com/moxart/moxray",
+    "macOS": {
+      "minimumSystemVersion": "11.0"
+    },
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser",
+        "displayLanguageSelector": true,
+        "languages": [
+          "English",
+          "Persian"
+        ]
+      }
+    }
   }
 }

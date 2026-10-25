@@ -45,5 +45,9 @@ if __name__ == "__main__":
         if size != 512:
             base.resize((size, size), Image.LANCZOS).save(ROOT / "icons" / name)
         print("wrote", name)
+    # Windows and macOS installers need their own container formats.
+    base.save(ROOT / "icons" / "icon.ico", sizes=[(s, s) for s in (16, 24, 32, 48, 64, 128, 256)])
+    base.save(ROOT / "icons" / "icon.icns")
+    print("wrote icon.ico, icon.icns")
     shutil.copy(ROOT / "icons" / "moxray.svg", ROOT / "ui" / "logo.svg")
     print("wrote ui/logo.svg")

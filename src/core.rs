@@ -11,7 +11,7 @@ use std::process::Stdio;
 use std::sync::{Arc, Mutex as StdMutex};
 use std::time::Duration;
 use tokio::io::{AsyncBufReadExt, AsyncRead, BufReader};
-use tokio::process::{Child, Command};
+use tokio::process::Child;
 use tokio::sync::Mutex;
 
 const MAX_LOG_LINES: usize = 500;
@@ -136,7 +136,7 @@ impl Core {
         let config_path = data_dir().join("config.json");
         write_private(&config_path, &serde_json::to_vec_pretty(&config)?)?;
 
-        let mut child = Command::new(binary)
+        let mut child = crate::proc::command(binary)
             .arg("run")
             .arg("-c")
             .arg(&config_path)
@@ -190,7 +190,7 @@ pub async fn test_config(binary: &Path, server: &Server, settings: &Settings) ->
     write_private(&path, &serde_json::to_vec(&config)?)?;
     let output = tokio::time::timeout(
         Duration::from_secs(10),
-        Command::new(binary)
+        crate::proc::command(binary)
             .args(["run", "-test", "-c"])
             .arg(&path)
             .env("XRAY_LOCATION_ASSET", asset_dir(binary))
@@ -216,7 +216,7 @@ pub async fn test_config(binary: &Path, server: &Server, settings: &Settings) ->
 pub async fn traffic(binary: &Path) -> Result<(u64, u64)> {
     let output = tokio::time::timeout(
         Duration::from_secs(3),
-        Command::new(binary)
+        crate::proc::command(binary)
             .args([
                 "api",
                 "statsquery",

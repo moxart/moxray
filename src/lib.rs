@@ -4,6 +4,7 @@ pub mod health;
 pub mod model;
 pub mod net;
 pub mod parser;
+pub mod proc;
 pub mod scan;
 pub mod store;
 pub mod sysproxy;
