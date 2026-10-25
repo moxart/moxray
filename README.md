@@ -1,4 +1,4 @@
-# MoxRay
+# <img src="icons/moxray.svg" alt="" width="36" align="top"> MoxRay
 
 A desktop client for [Xray-core](https://github.com/XTLS/Xray-core) in the spirit of v2rayN, built with Tauri 2 (Rust backend, plain HTML/JS frontend, no Node build step). The look is the pomegranate theme of mox desktop.
 

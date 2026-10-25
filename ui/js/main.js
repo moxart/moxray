@@ -40,8 +40,8 @@ function renderSidebar() {
   const active = activeServer();
   $("#sidebar").replaceChildren(
     h("div", { class: "brand" },
-      h("span", { class: "logo", "aria-hidden": "true" }, "M"),
-      h("span", { class: "brand-name" }, "Mox", h("span", { class: "brand-thin" }, "Ray"))),
+      h("img", { class: "logo", src: "logo.svg", alt: "", width: 36, height: 36 }),
+      h("span", { class: "brand-name" }, "Mox", h("span", { class: "brand-accent" }, "Ray"))),
     h("nav", { class: "nav", "aria-label": "Main" }, VIEWS.map((v) =>
       h("button", {
         class: `nav-item ${v.id === current ? "on" : ""}`,

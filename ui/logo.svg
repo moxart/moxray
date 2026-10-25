@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <title>MoxRay</title>
+  <rect width="200" height="200" rx="44" fill="#b8323d"/>
+  <rect x="6" y="6" width="188" height="188" rx="39" fill="none" stroke="#e8707a" stroke-width="1" opacity="0.5"/>
+  <path d="M92 60 C88 52 90 46 94 44 C94 50 96 54 98 58 Z M108 60 C112 52 110 46 106 44 C106 50 104 54 102 58 Z" fill="#f3e3d8"/>
+  <path d="M100 58 C112 58 124 74 146 84 C160 90 170 98 176 112 C150 108 130 112 116 126 C110 134 106 146 104 170 L100 178 L96 170 C94 146 90 134 84 126 C70 112 50 108 24 112 C30 98 40 90 54 84 C76 74 88 58 100 58 Z" fill="#f3e3d8"/>
+  <path d="M100 176 L100 194" stroke="#f3e3d8" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <g fill="none" stroke="#8f2330" stroke-width="1.5" stroke-linecap="round" opacity="0.6">
+    <path d="M106 84 C126 90 146 98 166 110"/>
+    <path d="M106 98 C122 102 140 106 158 111"/>
+    <path d="M108 110 C116 112 124 112 132 113"/>
+    <path d="M94 84 C74 90 54 98 34 110"/>
+    <path d="M94 98 C78 102 60 106 42 111"/>
+    <path d="M92 110 C84 112 76 112 68 113"/>
+  </g>
+  <circle cx="93" cy="72" r="2.4" fill="#8f2330"/>
+  <circle cx="107" cy="72" r="2.4" fill="#8f2330"/>
+</svg>
