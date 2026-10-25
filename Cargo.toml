@@ -1,6 +1,6 @@
 [package]
 name = "moxray"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "A v2rayN-style proxy client for Xray-core, built with Tauri"
 license = "MIT"
